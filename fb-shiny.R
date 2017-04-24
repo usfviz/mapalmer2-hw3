@@ -6,7 +6,7 @@ require(dplyr)
 require(reshape2)
 require(GGally)
 
-facebook <- read.csv("/Users/melaniepalmer/Downloads/Facebook_metrics/dataset_Facebook.csv", sep = ';')
+facebook <- read.csv("dataset_Facebook.csv", sep = ';')
 #facebook$Post.Weekday <- as.factor(facebook$Post.Weekday)
 facebook$Post.Month <- as.numeric(facebook$Post.Month)
 
