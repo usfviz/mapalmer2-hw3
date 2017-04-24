@@ -53,49 +53,32 @@ facebook <- na.omit(facebook)
 
 ui <- fluidPage(
   headerPanel("Facebook Data"),
-  #sidebarPanel(  
-  # selectizeInput("month", "Month:",
-  #              choices = c("All",
-  #                          "January",
-  #                          "February",
-  #                          "March",
-  #                          "April",
-  #                          "May",
-  #                          "June",
-  #                          "July",
-  #                          "August",
-  #                          "September",
-  #                          "October",
-  #                          "November",
-  #                          "December"))),
-  
-   
   fluidRow(column(12,
-    navlistPanel("Graph Options",
-      tabPanel("Total Interactions by Month and Day", plotlyOutput("heat")),
-      tabPanel("Likes and Comments per Month", plotlyOutput("plot1")),
-      tabPanel("Total Consumers per Month", plotlyOutput("box")),
-      tabPanel("Interaction Totals by Post Type", plotlyOutput("parallel")),
-      tabPanel("Lifetime Engagement by Page Likers and Non-Likers", 
-               plotOutput("pairs", click = "plot_click"))),
-      verbatimTextOutput("info"),
-      selectizeInput("month", "Month:",
-                   choices = c("All",
-                               "January",
-                               "February",
-                               "March",
-                               "April",
-                               "May",
-                               "June",
-                               "July",
-                               "August",
-                               "September",
-                               "October",
-                               "November",
-                               "December"))
-      
+                  navlistPanel("Graph Options",
+                               tabPanel("Total Interactions by Month and Day", plotlyOutput("heat")),
+                               tabPanel("Likes and Comments per Month", plotlyOutput("plot1")),
+                               tabPanel("Total Consumers per Month", plotlyOutput("box")),
+                               tabPanel("Interaction Totals by Post Type", plotlyOutput("parallel")),
+                               tabPanel("Lifetime Engagement by Page Likers and Non-Likers", 
+                                        plotOutput("pairs", click = "plot_click")),
+                               selectizeInput("month", "Month:",
+                                              choices = c("All",
+                                                          "January",
+                                                          "February",
+                                                          "March",
+                                                          "April",
+                                                          "May",
+                                                          "June",
+                                                          "July",
+                                                          "August",
+                                                          "September",
+                                                          "October",
+                                                          "November",
+                                                          "December"))),
+                  verbatimTextOutput("info")
+                  
   )
-)
+  )
 )
 
 
