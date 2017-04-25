@@ -74,8 +74,9 @@ ui <- fluidPage(
                                                           "September",
                                                           "October",
                                                           "November",
-                                                          "December"))),
-                  verbatimTextOutput("info")
+                                                          "December")))#,
+                               #mainPanel(verbatimTextOutput("info"))
+                  
                   
   )
   )
@@ -119,6 +120,7 @@ server <- function(input, output) {
               "royalblue2", "royalblue4", 
               "dodgerblue", "blue", "royalblue", "deepskyblue2",
               "deepskyblue", "deepskyblue4", "lightskyblue4")
+  colors.weekend <- c("royalblue", "mediumblue")
   
   
   output$heat <- renderPlotly({
@@ -153,7 +155,7 @@ server <- function(input, output) {
   })
   
   
-  output$plot1 <- renderPlotly({
+  output$plot1 <- renderPlotly({ #Y AXIS SPACE
     data <- moData()
     options(warn = -1) 
     p <- ggplot(data, aes(x = like, y = comment, color = day)) +
@@ -163,7 +165,8 @@ server <- function(input, output) {
       facet_wrap(~ month) + 
       theme(panel.background = element_rect(fill = "white"), 
             panel.grid.major = element_line(colour = 'grey'),
-            legend.position = "none"
+            legend.position = "none", plot.margin = margin(.5,.5,.5,.5, "cm"), 
+            axis.title.y = element_text(margin = margin(l = 1, "cm"), size = 10)
             ) + 
       xlab("Likes") + ylab("Comments") + 
       scale_x_continuous(breaks = seq(0,3000,1000)) + scale_y_continuous(breaks = seq(0,250,50)) +
@@ -182,7 +185,7 @@ server <- function(input, output) {
   })
   
   
-  output$parallel <- renderPlotly({
+  output$parallel <- renderPlotly({  
     data <- moData()
     pc <- ggparcoord(data, columns = c(16:19), groupColumn = 2,
                      scale = "globalminmax", #centerObsID = 1, scaleSummary = "median",
@@ -199,8 +202,9 @@ server <- function(input, output) {
                                   Link = "deepskyblue2")) +
       
       theme(panel.background = element_rect(fill = "white"), 
-            panel.grid.major = element_line(colour = 'grey')) +
-      xlab("Interactions") + ylab("Scaled Values")
+            panel.grid.major = element_line(colour = 'grey'), plot.margin = margin(1,1,1,1, "cm"), 
+            axis.title.y = element_text(margin = margin(r = 5), size = 12)) +
+      xlab("Interactions") + ylab("Scaled Values") 
     
     ggplotly(pc, textfont = list(color = '#000000', size = 12))
   })
@@ -210,7 +214,8 @@ server <- function(input, output) {
     data <- moData()
     t <- list(size = 10)
     p <- plot_ly(data, x = ~month, y = ~Lifetime.Post.Consumers, 
-                 color = ~ day, colors = colors, type = "box") %>%
+                 color = ~ weekend, colors = colors.weekend, 
+                 type = "box") %>%
       layout(title = ' ', font = t) %>%
              layout(xaxis = list(title = 'Month'),
              yaxis = list(title = 'Total Post Consumers'))
@@ -219,7 +224,7 @@ server <- function(input, output) {
   })
 
   
-  output$pairs <- renderPlot({
+  output$pairs <- renderPlot({ #ADD UNITS
     data <- moData()
     
     plot <- function(data, mapping){
@@ -247,14 +252,14 @@ server <- function(input, output) {
                   lower = list(continuous = plot), 
                   diag = list(continuous = plot2),          
                   upper = list(continuous = plot)) +
-      theme_light() + theme(axis.text = element_text(size = 1))
+      theme_light() + theme(axis.text = element_text(size = 10))
     pm
     
   })
   
   #output$info <- renderText({
   #  #paste0("X = ", input$plot_click$x, "\nY = ", input$plot_click$y)
-  #  paste("Summary: ", input$plot_click$summary)
+  #  paste("X: ", input$plot_click$x, "Y: ", input$plot_click$y)
   #})
   
   
