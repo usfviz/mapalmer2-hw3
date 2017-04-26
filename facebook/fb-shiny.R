@@ -204,7 +204,7 @@ server <- function(input, output) {
       theme(panel.background = element_rect(fill = "white"), 
             panel.grid.major = element_line(colour = 'grey'), plot.margin = margin(1,1,1,1, "cm"), 
             axis.title.y = element_text(margin = margin(r = 5), size = 12)) +
-      xlab("Interactions") + ylab("Scaled Values") 
+      xlab("Interactions") + ylab("Totals") 
     
     ggplotly(pc, textfont = list(color = '#000000', size = 12))
   })
